@@ -4,6 +4,6 @@ A Flask-React web application that enables users to find career keywords that ma
 
 URL: https://careerexplore.herokuapp.com/
 
-Deployed backend API server on Heroku.
+Deployed Flask backend API server on Heroku.
 
-Deployed front-end on Heroku.
+Deployed React front-end on Heroku.
