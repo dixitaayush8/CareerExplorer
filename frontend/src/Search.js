@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import "./Search.css";
+
 class Search extends Component {
   state = {
   searchValue: '',
@@ -7,18 +8,18 @@ class Search extends Component {
   };
 
   makeApiCall = searchInput => {
-var searchUrl = 'https://careerfinderapi.herokuapp.com/getkeywordrecommendations';
-console.log(searchInput);
-fetch(searchUrl, { headers: {
-  'search': searchInput
-   }})
-.then(response => {
-return response.json();
-})
-.then(jsonData => {
-this.setState({ keywords: jsonData.keywords });
-});
-};
+  var searchUrl = 'https://careerfinderapi.herokuapp.com/getkeywordrecommendations';
+  console.log(searchInput);
+  fetch(searchUrl, { headers: {
+    'search': searchInput
+     }})
+  .then(response => {
+  return response.json();
+  })
+  .then(jsonData => {
+  this.setState({ keywords: jsonData.keywords });
+  });
+  };
 
 
 
@@ -36,6 +37,13 @@ this.setState({ keywords: jsonData.keywords });
 this.setState({ searchValue: event.target.value });
 };
 
+handleKeyPress = event => {
+  if (event.charCode === 13){
+    event.preventDefault();
+    this.handleSearch();
+  }
+}
+
 handleSearch = () => {
   this.makeApiCall(this.state.searchValue);
 }
@@ -43,26 +51,29 @@ handleSearch = () => {
 render() {
   return (
   <div>
-  <h1>Welcome to the keyword search app</h1>
+  <h1>Career Explorer</h1>
+  <p>Welcome to Career Explorer! Please enter in some skills in order to explore potential career interest keywords.</p>
+  <h1></h1>
   <input
     name="text"
     type="text"
     placeholder="Search"
     onChange={event => this.handleOnChange(event)}
+    onKeyPress={event => this.handleKeyPress(event)}
     value={this.state.searchValue}
 />
   <button onClick={this.handleSearch}>Search</button>
   {this.state.keywords ? (
-<div>
-{this.state.keywords.map((keyword, index) => (
-<div key={index}>
-<h1>{keyword.keyword}</h1>
-</div>
-))}
-</div>
-) : (
-<p>Try searching for a meal</p>
-)}
+    <div>
+    {this.state.keywords.map((keyword, index) => (
+    <div key={index}>
+    <p>{keyword.keyword}</p>
+    </div>
+    ))}
+    </div>
+    ) : (
+    <p>Try searching for a keyword</p>
+    )}
   </div>
   );
 }
