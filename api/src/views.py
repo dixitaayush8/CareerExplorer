@@ -16,8 +16,8 @@ CORS(main)
 
 @main.route('/getkeywordrecommendations')
 def jsonified_recommendations():
-	keyword_data = request.get_json()
-	keywords_parsed = parse_text(keyword_data['search'])
+	keyword_data = request.headers['search']
+	keywords_parsed = parse_text(keyword_data)
 	j = []
 	for i in keywords_parsed:
 		name = urllib.parse.quote_plus(i)
@@ -49,10 +49,11 @@ def mappify_keywords(jobs):
 	for i in jobs:
 		split_string = i.split()
 		for s in split_string:
-			if s in job_map and s[0].isupper() and not "-" in s and not "/" in s and not "and" in s and not "Nerd" in s:
-				job_map[s] = job_map[s] + 1
-			else:
-				job_map[s] = 1
+			if not "-" in s and not "/" in s and not "and" in s and not "Nerd" in s:
+				if s in job_map and s[0].isupper():
+					job_map[s] = job_map[s] + 1
+				else:
+					job_map[s] = 1
 	jm = OrderedDict(sorted(job_map.items(), key = itemgetter(1), reverse = True))
 	dict_jm = dict(jm)
 	first15pairs = {k: dict_jm[k] for k in list(dict_jm)[:30]}
