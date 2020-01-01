@@ -1,6 +1,6 @@
 # CareerExplorer
 
-A Flask-React web application that enables users to find career keywords that match their skills and interests.
+A Flask-React web application that recommends career keywords that match a user's skills and interests.
 
 URL: https://careerexplore.herokuapp.com/
 
