@@ -47,7 +47,6 @@ handleKeyPress = event => {
 }
 
 handleSearch = () => {
-  console.log(this.state.keywords);
   this.makeApiCall(this.state.searchValue);
 }
 
