@@ -52,7 +52,8 @@ render() {
   return (
   <div>
   <h1>Career Explorer</h1>
-  <p>Welcome to Career Explorer! Please enter in some skills in order to explore potential career interest keywords.</p>
+  <p>Welcome to Career Explorer! Please enter in some of your skills and interests (separated by commas) in order to explore your potential career interest keywords.</p>
+  <p>(e.g. "java, python, html, css")</p>
   <h1></h1>
   <input
     name="text"
