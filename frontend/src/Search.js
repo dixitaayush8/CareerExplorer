@@ -4,12 +4,13 @@ import "./Search.css";
 class Search extends Component {
   state = {
   searchValue: '',
-  keywords: []
+  keywords: [],
+  loading: false
   };
 
   makeApiCall = searchInput => {
   var searchUrl = 'https://careerfinderapi.herokuapp.com/getkeywordrecommendations';
-  console.log(searchInput);
+  this.setState({ loading: true });
   fetch(searchUrl, { headers: {
     'search': searchInput
      }})
@@ -17,9 +18,10 @@ class Search extends Component {
   return response.json();
   })
   .then(jsonData => {
-  this.setState({ keywords: jsonData.keywords });
-  });
+  this.setState({ keywords: jsonData.keywords, loading: false });
+});
   };
+
 
 
 
@@ -45,6 +47,7 @@ handleKeyPress = event => {
 }
 
 handleSearch = () => {
+  console.log(this.state.keywords);
   this.makeApiCall(this.state.searchValue);
 }
 
@@ -64,6 +67,9 @@ render() {
     value={this.state.searchValue}
 />
   <button onClick={this.handleSearch}>Search</button>
+  {this.state.loading && (
+    <p>Loading ...</p>
+  )}
   {this.state.keywords ? (
     <div>
     {this.state.keywords.map((keyword, index) => (
